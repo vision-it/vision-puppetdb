@@ -1,0 +1,2 @@
+---
+vision_puppetdb::db_password: 'foobar'
