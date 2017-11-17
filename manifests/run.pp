@@ -24,10 +24,15 @@ class vision_puppetdb::run (
   ], $environment)
 
   ::docker::run { 'postgres':
-    image         => "postgres:${psql_version}",
-    pull_on_start => true,
-    env           => [
+    image            => "postgres:${psql_version}",
+    pull_on_start    => true,
+    env              => [
       "POSTGRES_PASSWORD=${db_password}",
+    ],
+    extra_parameters => [
+      '--read-only=true',
+      '--tmpfs=/tmp',
+      '--tmpfs=/run/postgresql',
     ]
   }
 
@@ -36,7 +41,8 @@ class vision_puppetdb::run (
     env     => $docker_environment,
     ports   => [ '8080:8080', '8081:8081' ],
     links   => ['postgres'],
-    depends => ['postgres']
+    depends => ['postgres'],
+    # TODO: check if puppetdb container can be run read-only
   }
 
 }
