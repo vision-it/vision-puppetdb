@@ -25,5 +25,15 @@ describe 'vision_puppetdb' do
     describe file('/vision/puppetdb/') do
       it { is_expected.to be_directory }
     end
+    describe file('/vision/puppetdb/db') do
+      it { is_expected.to be_directory }
+    end
+    describe file('/vision/puppetdb/jetty.ini') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match 'jetty' }
+      its(:content) { is_expected.to match 'ssl-cert' }
+      its(:content) { is_expected.to match 'ssl-key' }
+      its(:content) { is_expected.to match 'puppetlabs' }
+    end
   end
 end

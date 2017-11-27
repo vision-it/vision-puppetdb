@@ -14,9 +14,12 @@
 class vision_puppetdb (
 
   String $db_password,
+  String $db_user            = 'puppetdb',
   Array  $environment        = [],
   String $puppetdb_version   = 'latest',
-  String $postgresql_version = 'latest'
+  String $postgresql_version = 'latest',
+  String $ssl_key            = '/etc/puppetlabs/puppetdb/ssl/jetty_private.pem',
+  String $ssl_cert           = '/etc/puppetlabs/puppetdb/ssl/jetty_public.pem'
 
 ) {
 
@@ -24,8 +27,15 @@ class vision_puppetdb (
   contain ::vision_puppetdb::images
   contain ::vision_puppetdb::run
 
-  file { '/vision/puppetdb':
+  file { ['/vision/puppetdb', '/vision/puppetdb/db']:
     ensure => directory
+  }
+
+  # TODO: Certificates need to be copied
+  file { '/vision/puppetdb/jetty.ini':
+    ensure  => file,
+    content => template('vision_puppetdb/jetty.ini.erb'),
+    require => File['/vision/puppetdb']
   }
 
   # Order of execution

@@ -1,0 +1,12 @@
+# This file is managed by Puppet
+[jetty]
+host = 0.0.0.0
+port = 8080
+
+ssl-host = 0.0.0.0
+ssl-port = 8081
+ssl-key = <%= @ssl_key %>
+ssl-cert = <%= @ssl_cert %>
+ssl-ca-cert = /etc/puppetlabs/puppetdb/ssl/certs/ca.pem
+
+access-log-config = /etc/puppetlabs/puppetdb/logging/request-logging.xml
