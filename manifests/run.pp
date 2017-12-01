@@ -52,7 +52,9 @@ class vision_puppetdb::run (
     links   => ['postgres'],
     volumes => [
       '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl',
-      '/vision/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini'
+      '/vision/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini',
+      '/vision/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf',
+      '/vision/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist'
     ],
     depends => ['postgres'],
     # TODO: check if puppetdb container can be run read-only

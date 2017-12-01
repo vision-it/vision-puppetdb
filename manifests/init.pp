@@ -16,6 +16,7 @@ class vision_puppetdb (
   String $db_password,
   String $db_user            = 'puppetdb',
   Array  $environment        = [],
+  Array  $cert_whitelist     = [],
   String $puppetdb_version   = 'latest',
   String $postgresql_version = 'latest',
   String $ssl_key            = '/etc/puppetlabs/puppetdb/ssl/jetty_private.pem',
@@ -35,6 +36,18 @@ class vision_puppetdb (
   file { '/vision/puppetdb/jetty.ini':
     ensure  => file,
     content => template('vision_puppetdb/jetty.ini.erb'),
+    require => File['/vision/puppetdb']
+  }
+
+  file { '/vision/puppetdb/config.conf':
+    ensure  => file,
+    content => file('vision_puppetdb/config.conf'),
+    require => File['/vision/puppetdb']
+  }
+
+  file { '/vision/puppetdb/certificate-whitelist':
+    ensure  => file,
+    content => $cert_whitelist.join("\n"),
     require => File['/vision/puppetdb']
   }
 

@@ -1,2 +1,5 @@
 ---
 vision_puppetdb::db_password: 'foobar'
+vision_puppetdb::cert_whitelist:
+  - foobar
+  - barfoo

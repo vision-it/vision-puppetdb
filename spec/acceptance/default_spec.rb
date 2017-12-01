@@ -35,5 +35,15 @@ describe 'vision_puppetdb' do
       its(:content) { is_expected.to match 'ssl-key' }
       its(:content) { is_expected.to match 'puppetlabs' }
     end
+    describe file('/vision/puppetdb/certificate-whitelist') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match 'foobar' }
+      its(:content) { is_expected.to match 'barfoo' }
+    end
+    describe file('/vision/puppetdb/config.conf') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match 'certificate-whitelist' }
+      its(:content) { is_expected.to match 'puppetdb' }
+    end
   end
 end
