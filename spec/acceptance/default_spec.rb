@@ -3,7 +3,7 @@ require 'spec_helper_acceptance'
 describe 'vision_puppetdb' do
   context 'with defaults' do
     it 'run idempotently' do
-      pp = <<-EOS
+      pp = <<-FILE
 
         class vision_docker() {}
         class vision_puppetdb::images () {}
@@ -14,7 +14,7 @@ describe 'vision_puppetdb' do
         }
 
         class { 'vision_puppetdb': }
-      EOS
+      FILE
 
       apply_manifest(pp, catch_failures: true)
       apply_manifest(pp, catch_changes: true)
