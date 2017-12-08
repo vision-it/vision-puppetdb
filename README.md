@@ -26,7 +26,7 @@ Note also that the certificate needs to contain all alterernative CNs for the Pu
 
   String `$ssl_cert`: Path to certificate file for PuppetDB (Default: `/etc/puppetlabs/puppetdb/ssl/jetty_public.pem`)
 
-  String `$explorer_version`: Tag for Puppet Explorer Docker image (Default: `latest`)
+  String `$explorer_version`: Tag for Puppet Explorer Docker image, set to `undef` to disable this container (Default: `latest`)
 
 ## Usage
 
