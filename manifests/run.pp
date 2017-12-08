@@ -65,7 +65,6 @@ class vision_puppetdb::run (
     ::docker::run { 'puppetexplorer':
       image            => "puppet/puppetexplorer:${explorer_version}",
       ports            => [ '8001:80' ],
-      links            => ['postgres'],
       depends          => ['puppetdb'],
       extra_parameters => [
         '--read-only=true',
