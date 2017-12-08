@@ -1,6 +1,6 @@
 # vision-puppetdb
 
-[![Build Status](https://travis-ci.org/vision-it/vision-puppetdb.svg?branch=development)](https://travis-ci.org/vision-it/vision-puppetdb)
+[![Build Status](https://travis-ci.org/vision-it/vision-puppetdb.svg?branch=production)](https://travis-ci.org/vision-it/vision-puppetdb)
 
 ## Notes
 
@@ -25,4 +25,3 @@ Include in a role/profile:
 ```puppet
 contain ::vision_puppetdb
 ```
-
