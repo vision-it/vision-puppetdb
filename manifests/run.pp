@@ -62,7 +62,7 @@ class vision_puppetdb::run (
   }
 
   if $explorer_version != undef {
-    ::docker::run { 'puppetdb':
+    ::docker::run { 'puppetexplorer':
       image            => "puppet/puppetexplorer:${explorer_version}",
       ports            => [ '80:8001' ],
       links            => ['postgres'],
