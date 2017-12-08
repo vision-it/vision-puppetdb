@@ -18,6 +18,7 @@ class vision_puppetdb::run (
   String $psql_version     = $::vision_puppetdb::postgresql_version,
   String $db_password      = $::vision_puppetdb::db_password,
   String $db_user          = $::vision_puppetdb::db_user,
+  String $explorer_version = $::vision_puppetdb::explorer_version,
 
 ) {
 
@@ -58,6 +59,18 @@ class vision_puppetdb::run (
     ],
     depends => ['postgres'],
     # TODO: check if puppetdb container can be run read-only
+  }
+
+  if $explorer_version != undef {
+    ::docker::run { 'puppetdb':
+      image            => "puppet/puppetexplorer:${explorer_version}",
+      ports            => [ '80:8001' ],
+      links            => ['postgres'],
+      depends          => ['puppetdb'],
+      extra_parameters => [
+        '--read-only=true',
+      ],
+    }
   }
 
 }

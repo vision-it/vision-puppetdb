@@ -21,12 +21,10 @@ class vision_puppetdb (
   String $postgresql_version = 'latest',
   String $ssl_key            = '/etc/puppetlabs/puppetdb/ssl/jetty_private.pem',
   String $ssl_cert           = '/etc/puppetlabs/puppetdb/ssl/jetty_public.pem',
-
   String $private_target     = '/etc/puppetlabs/puppet/ssl/jetty_private.pem',
   String $public_target      = '/etc/puppetlabs/puppet/ssl/jetty_public.pem',
   String $private_source     = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem",
   String $public_source      = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem",
-
 ) {
 
   contain ::vision_docker
