@@ -3,3 +3,5 @@ vision_puppetdb::db_password: 'foobar'
 vision_puppetdb::cert_whitelist:
   - foobar
   - barfoo
+vision_puppetdb::private_source: '/root/private.pem'
+vision_puppetdb::public_source: '/root/public.pem'

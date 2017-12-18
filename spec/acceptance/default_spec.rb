@@ -12,6 +12,14 @@ describe 'vision_puppetdb' do
         file { '/vision':
           ensure => directory,
         }
+        file { '/root/private.pem':
+          ensure  => file,
+          content => 'private',
+        }
+        file { '/root/public.pem':
+          ensure  => file,
+          content => 'public',
+        }
 
         class { 'vision_puppetdb': }
       FILE
@@ -34,6 +42,16 @@ describe 'vision_puppetdb' do
       its(:content) { is_expected.to match 'ssl-cert' }
       its(:content) { is_expected.to match 'ssl-key' }
       its(:content) { is_expected.to match 'puppetlabs' }
+    end
+    describe file('/etc/puppetlabs/puppet/ssl/jetty_private.pem') do
+      it { is_expected.to be_file }
+      it { is_expected.to be_mode '444' }
+      its(:content) { is_expected.to match 'private' }
+    end
+    describe file('/etc/puppetlabs/puppet/ssl/jetty_public.pem') do
+      it { is_expected.to be_file }
+      it { is_expected.to be_mode '444' }
+      its(:content) { is_expected.to match 'public' }
     end
     describe file('/vision/puppetdb/certificate-whitelist') do
       it { is_expected.to be_file }

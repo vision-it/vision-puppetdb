@@ -20,7 +20,12 @@ class vision_puppetdb (
   String $puppetdb_version   = 'latest',
   String $postgresql_version = 'latest',
   String $ssl_key            = '/etc/puppetlabs/puppetdb/ssl/jetty_private.pem',
-  String $ssl_cert           = '/etc/puppetlabs/puppetdb/ssl/jetty_public.pem'
+  String $ssl_cert           = '/etc/puppetlabs/puppetdb/ssl/jetty_public.pem',
+
+  String $private_target     = '/etc/puppetlabs/puppet/ssl/jetty_private.pem',
+  String $public_target      = '/etc/puppetlabs/puppet/ssl/jetty_public.pem',
+  String $private_source     = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem",
+  String $public_source      = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem",
 
 ) {
 
@@ -32,7 +37,6 @@ class vision_puppetdb (
     ensure => directory
   }
 
-  # TODO: Certificates need to be copied
   file { '/vision/puppetdb/jetty.ini':
     ensure  => file,
     content => template('vision_puppetdb/jetty.ini.erb'),
@@ -49,6 +53,18 @@ class vision_puppetdb (
     ensure  => file,
     content => $cert_whitelist.join("\n"),
     require => File['/vision/puppetdb']
+  }
+
+  exec {'jetty_private.pem':
+    command => "cp ${private_source} ${private_target} && chmod 444 ${private_target}",
+    path    => '/bin:/usr/bin',
+    unless  => "test -f ${private_target}"
+  }
+
+  exec {'jetty_public.pem':
+    command => "cp ${public_source} ${public_target} && chmod 444 ${public_target}",
+    path    => '/bin:/usr/bin',
+    unless  => "test -f ${public_target}"
   }
 
   # Order of execution
