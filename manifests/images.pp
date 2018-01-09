@@ -15,7 +15,6 @@ class vision_puppetdb::images (
 
   String $puppetdb_version   = $vision_puppetdb::puppetdb_version,
   String $postgresql_version = $vision_puppetdb::postgresql_version,
-  String $explorer_version   = $vision_puppetdb::explorer_version,
 
 ) {
 
@@ -29,14 +28,6 @@ class vision_puppetdb::images (
     ensure    => present,
     image     => 'puppet/puppetdb',
     image_tag => $puppetdb_version,
-  }
-
-  if $explorer_version != undef {
-    ::docker::image { 'puppetexplorer':
-      ensure    => present,
-      image     => 'puppet/puppetexplorer',
-      image_tag => $explorer_version,
-    }
   }
 
 }
