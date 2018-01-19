@@ -15,7 +15,7 @@ class vision_puppetdb::explorer (
 
   String $explorer_image = 'puppet/puppetexplorer',
   String $explorer_version = 'latest',
-  $puppetdb_servers = [ ['puppetdb.example.com', '/api'] ],
+  $puppetdb_servers = [ ['production', 'puppetdb.example.com/api'] ],
   $node_facts = [
     'operatingsystem',
     'operatingsystemrelease',
@@ -36,11 +36,6 @@ class vision_puppetdb::explorer (
     'name'  => 'Nodes in production env',
     'type'  => 'success',
     'query' => '#node.catalog_environment = production'
-    },
-    {
-    'name'  => 'Nodes in non-production env',
-    'type'  => 'warning',
-    'query' => '#node.catalog_environment != production'
     },
   ],
   ) {
