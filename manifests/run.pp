@@ -52,6 +52,7 @@ class vision_puppetdb::run (
     links   => ['postgres'],
     volumes => [
       '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl',
+      '/vision/pki/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem',
       '/vision/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini',
       '/vision/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf',
       '/vision/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist'
