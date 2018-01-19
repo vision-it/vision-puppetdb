@@ -64,6 +64,9 @@ class vision_puppetdb::explorer (
     extra_parameters => [
       '--read-only=true',
     ],
+    volumes          => [
+      '/etc/puppetexplorer-config.js:/puppetexplorer/config.js:ro',
+    ],
     require          => File['/etc/puppetexplorer-config.js'],
   }
 
