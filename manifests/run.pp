@@ -29,7 +29,6 @@ class vision_puppetdb::run (
 
   ::docker::run { 'postgres':
     image            => "puppet/puppetdb-postgres:${psql_version}",
-    pull_on_start    => true,
     expose           => ['5432'],
     volumes          => [
       '/vision/puppetdb/db:/var/lib/postgresql/data'
