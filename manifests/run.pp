@@ -45,18 +45,23 @@ class vision_puppetdb::run (
   }
 
   ::docker::run { 'puppetdb':
-    image   => "puppet/puppetdb:${puppetdb_version}",
-    env     => $docker_environment,
-    ports   => [ '8080:8080', '8081:8081' ],
-    links   => ['postgres'],
-    volumes => [
-      '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl',
-      '/vision/pki/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem',
-      '/vision/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini',
-      '/vision/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf',
-      '/vision/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist'
+    image     => "puppet/puppetdb:${puppetdb_version}",
+    env       => $docker_environment,
+    ports     => [ '8080:8080', '8081:8081' ],
+    links     => ['postgres'],
+    volumes   => [
+      '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl:ro',
+      '/vision/pki/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem:ro',
+      '/vision/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini:ro',
+      '/vision/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf:ro',
+      '/vision/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist:ro'
     ],
-    depends => ['postgres'],
+    depends   => ['postgres'],
+    subscribe => [
+      File['/vision/puppetdb/jetty.ini'],
+      File['/vision/puppetdb/config.conf'],
+      File['/vision/puppetdb/certificate-whitelist'],
+    ]
     # TODO: check if puppetdb container can be run read-only
   }
 
