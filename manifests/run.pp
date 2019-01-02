@@ -25,6 +25,7 @@ class vision_puppetdb::run (
     "PUPPETDB_PASSWORD=${db_password}",
     "PUPPETDB_USER=${db_user}",
     'PUPPETDB_DATABASE_CONNECTION=//postgres:5432/puppetdb',
+    'USE_PUPPETSERVER=false'
   ], $environment)
 
   ::docker::run { 'postgres':
