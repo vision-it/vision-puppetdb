@@ -7,6 +7,9 @@ describe 'vision_puppetdb' do
       let(:facts) do
         facts
       end
+
+      let(:pre_condition) { 'include vision_docker' }
+
       # Default check to see if manifest compiles
       context 'compile' do
         it { is_expected.to compile.with_all_deps }
