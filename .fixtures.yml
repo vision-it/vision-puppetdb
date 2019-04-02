@@ -8,7 +8,7 @@ fixtures:
       ref: "5.0.1"
       repo: "https://github.com/puppetlabs/puppetlabs-apt"
     docker:
-      ref: " 3.3.0"
+      ref: "3.5.0"
       repo: "https://github.com/puppetlabs/puppetlabs-docker"
     vision_docker:
       repo: "https://github.com/vision-it/vision-docker"
