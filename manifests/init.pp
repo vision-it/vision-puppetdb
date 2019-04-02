@@ -35,6 +35,12 @@ class vision_puppetdb (
     ensure => directory
   }
 
+  file { '/vision/puppetdb/extensions.sql':
+    ensure  => file,
+    content => file('vision_puppetdb/extensions.sql'),
+    require => File['/vision/puppetdb']
+  }
+
   file { '/vision/puppetdb/jetty.ini':
     ensure  => file,
     content => template('vision_puppetdb/jetty.ini.erb'),

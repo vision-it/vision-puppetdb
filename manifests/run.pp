@@ -29,10 +29,11 @@ class vision_puppetdb::run (
   ], $environment)
 
   ::docker::run { 'postgres':
-    image            => "puppet/puppetdb-postgres:${psql_version}",
+    image            => "postgres:${psql_version}",
     expose           => ['5432'],
     volumes          => [
-      '/vision/puppetdb/db:/var/lib/postgresql/data'
+      '/vision/puppetdb/db:/var/lib/postgresql/data',
+      '/vision/puppetdb/extensions.sql:/docker-entrypoint-initdb.d/extensions.sql:ro'
     ],
     env              => [
       "POSTGRES_PASSWORD=${db_password}",
