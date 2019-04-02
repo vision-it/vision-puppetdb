@@ -20,7 +20,7 @@ class vision_puppetdb::images (
 
   ::docker::image { 'postgres':
     ensure    => present,
-    image     => 'puppet/puppetdb-postgres',
+    image     => 'postgres',
     image_tag => $postgresql_version,
   }
 
