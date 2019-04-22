@@ -5,3 +5,4 @@ vision_puppetdb::cert_whitelist:
   - barfoo
 vision_puppetdb::private_source: '/root/private.pem'
 vision_puppetdb::public_source: '/root/public.pem'
+vision_puppetdb::environment: [ 'EXTERNAL_ENV_VAR=ok' ]
