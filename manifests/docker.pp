@@ -63,12 +63,9 @@ class vision_puppetdb::docker (
       }
     }
   }
-  # note: application runs on port 80
 
-  # TODO: maybe make this a defined type / resource?
-  file{ '/vision/data/swarm/puppetdb.yaml':
-    ensure  => present,
-    content => inline_template("# This file is managed by Puppet\n<%= @compose.to_yaml %>")
+  vision_docker::to_compose { 'puppetdb':
+    compose => $compose,
   }
 
 }
