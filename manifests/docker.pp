@@ -59,6 +59,15 @@ class vision_puppetdb::docker (
           '/vision/data/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist:ro',
         ],
         'environment' => $docker_environment,
+        'deploy' => {
+          labels => [
+            'traefik.port=8080',
+            'traefik.frontend.rule=PathPrefix:/pdb',
+            'traefik.enable=true',
+            'traefik.frontend.whiteList.sourceRange=10.55.63.0/24',
+          ],
+        },
+
         # TODO: check if puppetdb container can be run read-only
       }
     }
