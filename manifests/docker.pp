@@ -31,14 +31,14 @@ class vision_puppetdb::docker (
             'type'   => 'tmpfs',
             'target' => '/tmp',
             'tmpfs'  => {
-              'size' => '1000000000' # 1GB
+              'size' => 1000000000 # 1GB
             },
           },
           {
             'type'   => 'tmpfs',
             'target' => '/run/postgresql',
             'tmpfs'  => {
-              'size' => '10000000' # 10MB
+              'size' => 10000000 # 10MB
             },
           },
         ],
