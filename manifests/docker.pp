@@ -14,6 +14,7 @@ class vision_puppetdb::docker (
   $docker_environment = concat([
     "PUPPETDB_PASSWORD=${db_password}",
     "PUPPETDB_USER=${db_user}",
+    'PUPPETDB_POSTGRES_HOSTNAME=puppetdb_postgres',
     'PUPPETDB_DATABASE_CONNECTION=//puppetdb_postgres:5432/puppetdb',
     'USE_PUPPETSERVER=false'
   ], $environment)
@@ -26,7 +27,7 @@ class vision_puppetdb::docker (
         'image'       => "postgres:${psql_version}",
         'volumes'     => [
           '/vision/data/puppetdb/postgresql_data:/var/lib/postgresql/data',
-          '/vision/data/puppetdb/extensions.sql:/docker-entrypoint-initdb.d/extensions.sql:ro',
+          '/vision/data/puppetdb/postgres-extensions.sql:/docker-entrypoint-initdb.d/extensions.sql:ro',
           {
             'type'   => 'tmpfs',
             'target' => '/tmp',
@@ -53,7 +54,7 @@ class vision_puppetdb::docker (
         'image'       => "puppet/puppetdb:${puppetdb_version}",
         'volumes'     => [
           '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl:ro',
-          '/vision/data/pki/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem:ro',
+          '/usr/local/share/ca-certificates/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem:ro',
           '/vision/data/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini:ro',
           '/vision/data/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf:ro',
           '/vision/data/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist:ro',
