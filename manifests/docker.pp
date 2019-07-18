@@ -66,9 +66,12 @@ class vision_puppetdb::docker (
             'traefik.frontend.rule=PathPrefix:/pdb',
             'traefik.enable=true',
             'traefik.frontend.whiteList.sourceRange=10.55.63.0/24',
+            'traefik.docker.network=vision_default',
           ],
         },
-
+        'ports'  => [
+          '8081:8081',
+        ],
         # TODO: check if puppetdb container can be run read-only
       }
     }
