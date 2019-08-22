@@ -27,36 +27,34 @@ class vision_puppetdb (
   String $public_source      = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem",
 ) {
 
-  contain ::vision_docker
-  contain ::vision_puppetdb::images
-  contain ::vision_puppetdb::run
+  contain ::vision_gluster::node
 
-  file { ['/vision/puppetdb', '/vision/puppetdb/db']:
+  file { ['/vision/data/puppetdb', '/vision/data/puppetdb/postgresql_data']:
     ensure => directory
   }
 
-  file { '/vision/puppetdb/extensions.sql':
+  file { '/vision/data/puppetdb/postgres-extensions.sql':
     ensure  => file,
     content => file('vision_puppetdb/extensions.sql'),
-    require => File['/vision/puppetdb']
+    require => File['/vision/data/puppetdb']
   }
 
-  file { '/vision/puppetdb/jetty.ini':
+  file { '/vision/data/puppetdb/jetty.ini':
     ensure  => file,
     content => template('vision_puppetdb/jetty.ini.erb'),
-    require => File['/vision/puppetdb']
+    require => File['/vision/data/puppetdb']
   }
 
-  file { '/vision/puppetdb/config.conf':
+  file { '/vision/data/puppetdb/config.conf':
     ensure  => file,
     content => file('vision_puppetdb/config.conf'),
-    require => File['/vision/puppetdb']
+    require => File['/vision/data/puppetdb']
   }
 
-  file { '/vision/puppetdb/certificate-whitelist':
+  file { '/vision/data/puppetdb/certificate-whitelist':
     ensure  => file,
     content => $cert_whitelist.join("\n"),
-    require => File['/vision/puppetdb']
+    require => File['/vision/data/puppetdb']
   }
 
   exec {'jetty_private.pem':
@@ -71,9 +69,6 @@ class vision_puppetdb (
     unless  => "test -f ${public_target}"
   }
 
-  # Order of execution
-  Class['::vision_docker']
-  -> Class['::vision_puppetdb::images']
-  -> Class['::vision_puppetdb::run']
+  contain ::vision_puppetdb::docker
 
 }

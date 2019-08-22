@@ -8,7 +8,8 @@ describe 'vision_puppetdb' do
         facts
       end
 
-      let(:pre_condition) { 'include vision_docker' }
+      # mock classes
+      let(:pre_condition) { 'class vision_gluster::node() {}' }
 
       # Default check to see if manifest compiles
       context 'compile' do
