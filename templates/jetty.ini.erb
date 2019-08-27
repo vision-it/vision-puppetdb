@@ -5,6 +5,6 @@ port = 8080
 
 ssl-host = 0.0.0.0
 ssl-port = 8081
-ssl-key = <%= @ssl_key %>
-ssl-cert = <%= @ssl_cert %>
-ssl-ca-cert = /etc/puppetlabs/puppetdb/ssl/certs/ca.pem
+ssl-key = /etc/puppetlabs/puppetdb/ssl/jetty_private.pem
+ssl-cert = /etc/puppetlabs/puppetdb/ssl/jetty_public.pem
+ssl-ca-cert = /etc/puppetlabs/puppetdb/ssl/ca.pem

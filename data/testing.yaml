@@ -3,6 +3,6 @@ vision_puppetdb::db_password: 'foobar'
 vision_puppetdb::cert_whitelist:
   - foobar
   - barfoo
-vision_puppetdb::private_source: '/root/private.pem'
-vision_puppetdb::public_source: '/root/public.pem'
+vision_puppetdb::x509_key: 'private key'
+vision_puppetdb::x509_cert: 'public certificate'
 vision_puppetdb::environment: [ 'EXTERNAL_ENV_VAR=ok' ]

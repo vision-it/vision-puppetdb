@@ -13,23 +13,19 @@
 
 class vision_puppetdb (
 
+  String $x509_key,
+  String $x509_cert,
   String $db_password,
   String $db_user            = 'puppetdb',
   Array  $environment        = [],
   Array  $cert_whitelist     = [],
   String $puppetdb_version   = 'latest',
   String $postgresql_version = 'latest',
-  String $ssl_key            = '/etc/puppetlabs/puppetdb/ssl/jetty_private.pem',
-  String $ssl_cert           = '/etc/puppetlabs/puppetdb/ssl/jetty_public.pem',
-  String $private_target     = '/etc/puppetlabs/puppet/ssl/jetty_private.pem',
-  String $public_target      = '/etc/puppetlabs/puppet/ssl/jetty_public.pem',
-  String $private_source     = "/etc/puppetlabs/puppet/ssl/private_keys/${::fqdn}.pem",
-  String $public_source      = "/etc/puppetlabs/puppet/ssl/certs/${::fqdn}.pem",
 ) {
 
   contain ::vision_gluster::node
 
-  file { ['/vision/data/puppetdb', '/vision/data/puppetdb/postgresql_data']:
+  file { ['/vision/data/puppetdb', '/vision/data/puppetdb/ssl', '/vision/data/puppetdb/postgresql_data']:
     ensure => directory
   }
 
@@ -57,16 +53,18 @@ class vision_puppetdb (
     require => File['/vision/data/puppetdb']
   }
 
-  exec {'jetty_private.pem':
-    command => "cp ${private_source} ${private_target} && chmod 444 ${private_target}",
-    path    => '/bin:/usr/bin',
-    unless  => "test -f ${private_target}"
+  file { '/vision/data/puppetdb/ssl/jetty_private.pem':
+    ensure  => file,
+    mode    => '0444',
+    content => $x509_key,
+    require => File['/vision/data/puppetdb/ssl'],
   }
 
-  exec {'jetty_public.pem':
-    command => "cp ${public_source} ${public_target} && chmod 444 ${public_target}",
-    path    => '/bin:/usr/bin',
-    unless  => "test -f ${public_target}"
+  file { '/vision/data/puppetdb/ssl/jetty_public.pem':
+    ensure  => file,
+    mode    => '0444',
+    content => $x509_cert,
+    require => File['/vision/data/puppetdb/ssl'],
   }
 
   contain ::vision_puppetdb::docker

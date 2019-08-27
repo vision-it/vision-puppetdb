@@ -53,8 +53,8 @@ class vision_puppetdb::docker (
         # note: puppetdb runs on port 8080 / 8081
         'image'       => "puppet/puppetdb:${puppetdb_version}",
         'volumes'     => [
-          '/etc/puppetlabs/puppet/ssl/:/etc/puppetlabs/puppetdb/ssl:ro',
-          '/usr/local/share/ca-certificates/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/certs/ca.pem:ro',
+          '/vision/data/puppetdb/ssl:/etc/puppetlabs/puppetdb/ssl:ro',
+          '/usr/local/share/ca-certificates/VisionCA.crt:/etc/puppetlabs/puppetdb/ssl/ca.pem:ro',
           '/vision/data/puppetdb/jetty.ini:/etc/puppetlabs/puppetdb/conf.d/jetty.ini:ro',
           '/vision/data/puppetdb/config.conf:/etc/puppetlabs/puppetdb/conf.d/config.conf:ro',
           '/vision/data/puppetdb/certificate-whitelist:/etc/puppetlabs/puppetdb/conf.d/certificate-whitelist:ro',
