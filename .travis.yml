@@ -1,7 +1,7 @@
 sudo: false
 language: ruby
 cache: bundler
-rvm: 2.3.4
+rvm: 2.3
 script:
   - 'bundle exec rake $CHECK'
 matrix:
@@ -9,10 +9,6 @@ matrix:
   allow_failures:
     - env: STRICT_VARIABLES="yes" CHECK="rubocop"
       bundler_args: --without testing acceptance
-    - env: STRICT_VARIABLES="yes" CHECK="beaker"
-      bundler_args: --without rubocop
-      services: docker
-      sudo: required
   include:
     - env: STRICT_VARIABLES="yes" CHECK="rubocop"
       bundler_args: --without testing acceptance
@@ -22,12 +18,11 @@ matrix:
       bundler_args: --without rubocop acceptance
     - env: STRICT_VARIABLES="yes" CHECK="spec"
       bundler_args: --without rubocop acceptance
-    - env: STRICT_VARIABLES="yes" CHECK="beaker"
-      bundler_args: --without rubocop
+    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_set="debian9"
       services: docker
       sudo: required
-    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_set="debian9"
-      bundler_args: --without rubocop
+    - env: STRICT_VARIABLES="yes" CHECK="beaker" BEAKER_set="debian10"
+      before_script: sh ./buster_fix.sh
       services: docker
       sudo: required
 notifications:
